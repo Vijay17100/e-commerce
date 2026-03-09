@@ -1,0 +1,16 @@
+frontend:
+  image: vijayvj1710/ecommerce
+  tag: frontend-0.0.1
+  replicas: 1
+ 
+
+backend:
+  image: vijayvj1710/ecommerce
+  tag: backend-0.0.1
+  replicas: 1
+  
+database:
+  image: postgres:18.1-alpine
+  storage: 
+    size: 100Mi
+  replicas: 1

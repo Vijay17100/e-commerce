@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
+      containers:
+        - name: backend
+          image: vijayvj1710/ecommerce:backend-0.0.1
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
+          env:
+            - name: DATABASE_URL
+              value: "postgresql+psycopg2://root:vijay@postgres-headless:5432/ecommerce_db"
+            - name: POSTGRES_USER
+              value: "root"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: ecommerce_db
+            - name: POSTGRES_PORT
+              value: "5432"
